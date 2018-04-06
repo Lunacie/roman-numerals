@@ -162,6 +162,20 @@ function RomanNumber(value) {
     return res;
   }
 
+  /*
+  **  toInt()
+  ** Returns the arabic numeral value
+  */
+  this.toInt = function() {
+    if (this._type == FAILURE)
+      return FAILURE;
+    if (this._type == ARABIC)
+      return this._value;
+    this._buildArrayFromStr(this._value);
+    let res = 42;
+    return res;
+  }
+
 
 
 
@@ -315,6 +329,29 @@ test_toString = function(data) {
                 res == elem.expects ? YES: NO);
   })
 }
+test_toInt = function(data) {
+  console.log(DEFAULT, "\nCAN RETURN ROMAN NUMERAL FROM ARABIC NOTATION :");
+  let nb = new RomanNumber();
+  data.forEach(function(elem) {
+    for (var i = 0; i < elem.set.length; i++) {
+      nb.setValue(elem.set[i]);
+      message = null;
+      try {
+        nb._getType();
+      }
+      catch(e) {
+        message = e;
+      }
+      let res = nb.toInt();
+      console.log('%s "%s" = %s, expected:%s%s [passed : %s]',
+                  DEFAULT,
+                  elem.set[i],
+                  res, elem.expects,
+                  message ? '(' + message + ')' : '',
+                  res == elem.expects ? YES: NO);
+    }
+ })
+}
 
 
 
@@ -405,5 +442,25 @@ if (RUN_TESTS) {
     {expects: FAILURE, set: "error"}
   ]
   test_toString(data);
+
+  /*
+  ** 6. this tests the toInt() function
+  */
+  data = [
+    {expects : FAILURE, set: [null, '']},
+    {expects : 1, set: ['I']},
+    {expects : 3, set: ['III']},
+    {expects : FAILURE, set: ['IIII']},
+    {expects : 4, set: ['IV']},
+    {expects : 5, set: ['V']},
+    {expects : 429, set: ['CDXXIX']},
+    {expects : FAILURE, set: ['CD1X']},
+    {expects : FAILURE, set: ['error']},
+    {expects : 1482, set: ['MCDLXXXII']},
+    {expects : 1980, set: ['MCMLXXX']},
+    {expects : FAILURE, set: ['MMMMCMXCIX']},
+    {expects : FAILURE, set: ['MMMMDMXCIX']}
+  ];
+  test_toInt(data);
 
 }
