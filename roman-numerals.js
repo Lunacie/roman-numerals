@@ -51,7 +51,7 @@ function RomanNumber(value) {
   ** eg: IIX is valid, while IIIIX is not
   */
   this._checkRomanIsValid = function(str) {
-    return false;
+        return false;
   }
 
 
@@ -127,6 +127,20 @@ test_getType = function(data) {
     }
   })
 }
+test_checkRomanIsValid = function(data) {
+  console.log(DEFAULT, "\nCAN CHECK IF ROMAN NUMERAL STRING IS VALID : ");
+  let nb = new RomanNumber();
+  data.forEach(function(elem) {
+    for (var i = 0; i < elem.set.length; i++) {
+      let res = nb._checkRomanIsValid(elem.set[i]);
+      console.log('%s %s is %s valid [passed : %s]',
+                  DEFAULT,
+                  elem.set[i],
+                  !res ? 'NOT' : '',
+                  res == elem.expects ? YES: NO);
+    }
+  })
+}
 
 
 
@@ -146,5 +160,15 @@ if (RUN_TESTS) {
                  {expects : ROMAN, set : ['MCDLXXXII', 'MCMLXXX']}
                ];
     test_getType(data);
+
+    /*
+    ** 2. this tests the _checkRomanIsValid() function
+    */
+    data = [
+      {expects : true, set : ["XC", "I", "IV", "MCMCV", "IIV", "IIIV"]},
+      {expects : false, set : ["IIIIV", "IIIIIV", "IIIIIIV", "MMMMDXXVII"]},
+    ]
+    test_checkRomanIsValid(data);
+
 
 }
