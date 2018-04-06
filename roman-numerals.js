@@ -5,6 +5,16 @@ const FAILURE = -1
 const ROMAN = 1
 const ARABIC = 2
 
+const VALUES = {
+  'M' : 1000,
+  'D' : 500,
+  'C' : 100,
+  'L' : 50,
+  'X' : 10,
+  'V' : 5,
+  'I' : 1
+};
+
 function RomanNumber(value) {
 
   /*
@@ -83,8 +93,16 @@ function RomanNumber(value) {
   ** eg MMMDXXVII =>  [1000,1000,1000,500,10,10,5,1,1]
   */
   this._buildArrayFromStr = function() {
-    let res = [10, 20, 30, 40];
-    this._valueArray = res;
+      let last = null;
+      let res = [];
+      for (var i = 0; i < this._value.length; i++) {
+        if (last != null && last < VALUES[this._value[i]])
+            res[res.length - 1] = VALUES[this._value[i]] - last;
+        else
+          res.push(VALUES[this._value[i]]);
+        last = VALUES[this._value[i]];
+      }
+      this._valueArray = res;
   }
 
 
