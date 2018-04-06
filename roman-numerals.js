@@ -6,9 +6,33 @@ const ROMAN = 1
 const ARABIC = 2
 
 function RomanNumber(value) {
+
+  /*
+  **  _getType(value)
+  ** Returns numeral type, FAILURE, ROMAN or ARABIC,
+  ** Throws exceptions if invalid
+  */
+  this._getType =  function() {
+    let value = this._value;
+    this._type = FAILURE;
+    return this._type;
+  }
+
+
+  /*
+  ** getters/setters
+  */
+  this.setValue = function(value) {
+    this._value = value;
+  }
+
+
+  /*
+  ** ctor : RomanNumber(value)
+  */
   this._value = value;
-
-
+  if (value)
+    this._type = this._getType();
 }
 
 module.exports = function(value) {
@@ -29,6 +53,13 @@ module.exports = function(value) {
 const DEFAULT = COLOR_SHELL ? '\033[0m' : '';
 const YES = COLOR_SHELL ? '\033[32mYES\033[0m' : 'YES';
 const NO = COLOR_SHELL ? "\033[31mNO\033[0m" : 'NO';
+format_typeName = function(type) {
+  if (type == ARABIC)
+    return "arabic";
+  if (type == ROMAN)
+    return "roman";
+  return "invalid";
+}
 
 
 /*
@@ -37,6 +68,27 @@ const NO = COLOR_SHELL ? "\033[31mNO\033[0m" : 'NO';
 test_getType = function(data) {
   console.log(DEFAULT, "\nCAN GET TYPE OF NUMERAL : ");
   let nb = new RomanNumber();
+  data.forEach(function(elem) {
+    for (var i = 0; i < elem.set.length; i++) {
+      nb.setValue(elem.set[i]);
+      let message = null;
+      try {
+        nb._getType();
+      }
+      catch (e) {
+        message = e;
+      }
+      let type = nb._type;
+      console.log('%s %s%s%s type : %s %s [passed : %s]',
+                  DEFAULT,
+                  elem.set[i] == null ? null : '',
+                  typeof(elem.set[i]) == 'string' ? '"'+elem.set[i]+'"': '',
+                  typeof(elem.set[i]) == 'number' ? elem.set[i] : '',
+                  format_typeName(type),
+                  message ? '(' + message + ')' : '',
+                  type == elem.expects ? YES: NO);
+    }
+  })
 }
 
 
