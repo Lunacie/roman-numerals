@@ -29,9 +29,31 @@ function RomanNumber(value) {
         this._value = value;
         this._type = ARABIC;
       }
+      else if (/^([M|D|C|L|X|V|I])*$/.test(value)) {
+        if (this._checkRomanIsValid(value))
+          this._type = ROMAN;
+        else {
+            this._type = FAILURE;
+            throw("invalid value");
+        }
+      }
+      else {
+        this._type = FAILURE;
+        throw("invalid value");
+      }
     }
     return this._type;
   }
+
+  /*
+  **  _checkRomanIsValid(str)
+  ** Checks if the roman numeral string is valid,
+  ** eg: IIX is valid, while IIIIX is not
+  */
+  this._checkRomanIsValid = function(str) {
+    return false;
+  }
+
 
 
   /*
