@@ -143,6 +143,20 @@ function RomanNumber(value) {
       this._valueArray = res;
   }
 
+  /*
+  **  toString()
+  ** Returns the roman numeral value
+  */
+  this.toString = function() {
+    if (this._type == FAILURE)
+      return FAILURE;
+    if (this._type == ROMAN)
+      return this._value;
+    this._buildArrayFromNb(this._value);
+    let res = "XIV";
+    return res;
+  }
+
 
 
 
@@ -275,34 +289,54 @@ test_buildArrayFromNb = function(data) {
                   match ? YES: NO);
     })
 }
+test_toString = function(data) {
+  console.log(DEFAULT, "\nCAN RETURN ARABIC NUMERAL FROM ROMAN NOTATION :");
+  let nb = new RomanNumber();
+  data.forEach(function(elem) {
+    nb.setValue(elem.set);
+    message = null;
+    try {
+      nb._getType();
+    }
+    catch(e) {
+      message = e;
+    }
+    let res = nb.toString();
+    console.log('%s %s = "%s", expected:"%s"%s [passed : %s]',
+                DEFAULT,
+                elem.set,
+                res, elem.expects,
+                message ? '(' + message + ')' : '',
+                res == elem.expects ? YES: NO);
+  })
+}
 
 
 
 /* Let's run tests */
 if (RUN_TESTS) {
+  /*
+  ** 1. this tests the _getType() function
+  */
+  let data = [
+               {expects : FAILURE, set : [null,'', -42,"-42","---42", "-101010--", 10000, 0, 42.42, "42.42", "49999"]},
+               {expects : ARABIC, set : [1, 3, 4, 5]},
+               {expects : ROMAN, set : ['I', 'III', 'IV', 'V']},
+               {expects : ARABIC, set : [1968, '1473', 2999, 3000]},
+               {expects : ROMAN, set : ['CDXXIX']},
+               {expects : FAILURE, set : ['CD1X', 'error', 'MMMMCMXCIX', 'MMMMDMXCIX', 'IIII']},
+               {expects : ROMAN, set : ['MCDLXXXII', 'MCMLXXX']}
+             ];
+  test_getType(data);
 
-    /*
-    ** 1. this tests the _getType() function
-    */
-    let data = [
-                 {expects : FAILURE, set : [null,'', -42,"-42","---42", "-101010--", 10000, 0, 42.42, "42.42", "49999"]},
-                 {expects : ARABIC, set : [1, 3, 4, 5]},
-                 {expects : ROMAN, set : ['I', 'III', 'IV', 'V']},
-                 {expects : ARABIC, set : [1968, '1473', 2999, 3000]},
-                 {expects : ROMAN, set : ['CDXXIX']},
-                 {expects : FAILURE, set : ['CD1X', 'error', 'MMMMCMXCIX', 'MMMMDMXCIX', 'IIII']},
-                 {expects : ROMAN, set : ['MCDLXXXII', 'MCMLXXX']}
-               ];
-    test_getType(data);
-
-    /*
-    ** 2. this tests the _checkRomanIsValid() function
-    */
-    data = [
-      {expects : true, set : ["XC", "I", "IV", "MCMCV", "IIV", "IIIV"]},
-      {expects : false, set : ["IIIIV", "IIIIIV", "IIIIIIV", "MMMMDXXVII"]},
-    ]
-    test_checkRomanIsValid(data);
+  /*
+  ** 2. this tests the _checkRomanIsValid() function
+  */
+  data = [
+    {expects : true, set : ["XC", "I", "IV", "MCMCV", "IIV", "IIIV"]},
+    {expects : false, set : ["IIIIV", "IIIIIV", "IIIIIIV", "MMMMDXXVII"]},
+  ]
+  test_checkRomanIsValid(data);
 
   /*
   ** 3. this tests the _buildArrayFromStr() function
@@ -328,20 +362,43 @@ if (RUN_TESTS) {
   test_buildArrayFromStr(data);
 
 
-    /*
-    ** 4. this tests the _buildArrayFromNb() function
-    */
-    data = [
-      {expects : [1000, 100, 1000, 50, 10, 1, 10], set: 1969},
-      {expects : [10, 1, 5], set: 14},
-      {expects : [1000, 100, 1000, 10, 100, 1, 1], set: 1992},
-      {expects : [1000,500, 10, 100, 1, 1], set: 1592},
-      {expects : [1000, 100, 500, 50, 1, 1], set: 1452},
-      {expects : [1000, 500, 50, 1, 1], set: 1552},
-      {expects : [1000, 500, 50, 5], set: 1555},
-      {expects : [1000, 500, 100, 100, 50, 5], set: 1755},
-      {expects : [1, 10], set: 9},
-    ];
-    test_buildArrayFromNb(data);
+  /*
+  ** 4. this tests the _buildArrayFromNb() function
+  */
+  data = [
+    {expects : [1000, 100, 1000, 50, 10, 1, 10], set: 1969},
+    {expects : [10, 1, 5], set: 14},
+    {expects : [1000, 100, 1000, 10, 100, 1, 1], set: 1992},
+    {expects : [1000,500, 10, 100, 1, 1], set: 1592},
+    {expects : [1000, 100, 500, 50, 1, 1], set: 1452},
+    {expects : [1000, 500, 50, 1, 1], set: 1552},
+    {expects : [1000, 500, 50, 5], set: 1555},
+    {expects : [1000, 500, 100, 100, 50, 5], set: 1755},
+    {expects : [1, 10], set: 9},
+  ];
+  test_buildArrayFromNb(data);
+
+  /*
+  ** 5. this tests the toString() function
+  */
+  data = [
+    {expects: FAILURE, set: null},
+    {expects: FAILURE, set: ''},
+    {expects: FAILURE, set: 0},
+    {expects: "XLII", set: 42},
+    {expects: "XLII", set: "42"},
+    {expects: "I", set: 1},
+    {expects: "III", set: 3},
+    {expects: "IV", set: 4},
+    {expects: "V", set: 5},
+    {expects: "MCMLXVIII", set: 1968},
+    {expects: "XLII", set: "XLII"},
+    {expects: "MCDLXXIII", set: 1473},
+    {expects: "MMCMXCIX", set: 2999},
+    {expects: "MMM", set: 3000},
+    {expects: FAILURE, set: 10000},
+    {expects: FAILURE, set: "error"}
+  ]
+  test_toString(data);
 
 }
