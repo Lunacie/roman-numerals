@@ -14,7 +14,12 @@ function RomanNumber(value) {
   */
   this._getType =  function() {
     let value = this._value;
-    this._type = FAILURE;
+
+    if (value == null || (typeof value == 'string' && !value)) {
+        this._type = FAILURE;
+        throw("value required");
+      }
+      
     return this._type;
   }
 
