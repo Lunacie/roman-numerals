@@ -104,6 +104,15 @@ function RomanNumber(value) {
       }
       this._valueArray = res;
   }
+  /*
+  **  _buildArrayFromNb(value)
+  ** Builds a value array from an arabic number
+  ** eg 1992 =>  [1000, 100, 1000, 10, 100, 1, 1]
+  */
+  this._buildArrayFromNb = function() {
+    let res = [1000, 100, 10, 1];
+    this._valueArray = res;
+  }
 
 
 
@@ -220,8 +229,22 @@ test_buildArrayFromStr = function(data) {  console.log(DEFAULT, "\nCAN BUILD VAL
   })
 }
 test_buildArrayFromNb = function(data) {
-  console.log(DEFAULT, "\nCAN BUILD VALUE ARRAY FROM ARABIC NUMBER : ");
-  let nb = new RomanNumber();
+    console.log(DEFAULT, "\nCAN BUILD VALUE ARRAY FROM ARABIC NUMBER : ");
+    let nb = new RomanNumber();
+    data.forEach(function(elem) {
+      nb.setValue(elem.set);
+      nb._getType();
+      nb._buildArrayFromNb();
+      let res = nb._valueArray;
+      let match = misc_checkIfArraysMatch(res, elem.expects);
+      console.log('%s for "%s" [%s] %s match expected:[%s] [passed : %s]',
+                  DEFAULT,
+                  elem.set,
+                  res.toString(),
+                  match ? "does" : "does NOT",
+                  elem.expects.toString(),
+                  match ? YES: NO);
+    })
 }
 
 
