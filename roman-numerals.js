@@ -42,6 +42,18 @@ function RomanNumber(value) {
         throw("invalid value");
       }
     }
+
+    else if (typeof value == 'number') {
+      if (value < 1 || value > 3999) {
+        this._type = FAILURE;
+        throw("invalid range");
+      }
+      if (value % 1) {
+          this._type = FAILURE;
+          throw("invalid value");
+      }
+      this._type = ARABIC;
+    }
     return this._type;
   }
 
