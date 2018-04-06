@@ -172,7 +172,10 @@ function RomanNumber(value) {
     if (this._type == ARABIC)
       return this._value;
     this._buildArrayFromStr(this._value);
-    let res = 42;
+    let res = 0;
+    this._valueArray.forEach(function(elem){
+      res += elem;
+    });
     return res;
   }
 
