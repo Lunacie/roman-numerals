@@ -77,6 +77,17 @@ function RomanNumber(value) {
       return true;
   }
 
+  /*
+  **  _buildArrayFromStr(value)
+  ** Builds a value array from a roman numeral string
+  ** eg MMMDXXVII =>  [1000,1000,1000,500,10,10,5,1,1]
+  */
+  this._buildArrayFromStr = function() {
+    let res = [10, 20, 30, 40];
+    this._valueArray = res;
+  }
+
+
 
 
   /*
@@ -119,6 +130,15 @@ format_typeName = function(type) {
   if (type == ROMAN)
     return "roman";
   return "invalid";
+}
+misc_checkIfArraysMatch = function(ar1, ar2) {
+  if (ar1.length != ar2.length)
+    return false;
+  for (var i = 0; i < ar1.length; i++) {
+    if (ar1[i] != ar2[i])
+      return false;
+  }
+  return true;
 }
 
 
@@ -164,9 +184,22 @@ test_checkRomanIsValid = function(data) {
     }
   })
 }
-test_buildArrayFromStr = function(data) {
-  console.log(DEFAULT, "\nCAN BUILD VALUE ARRAY FROM ROMAN NUMBER : ");
+test_buildArrayFromStr = function(data) {  console.log(DEFAULT, "\nCAN BUILD VALUE ARRAY FROM ROMAN NUMBER : ");
   let nb = new RomanNumber();
+  data.forEach(function(elem) {
+    nb.setValue(elem.set[0]);
+    nb._getType();
+    nb._buildArrayFromStr();
+    let res = nb._valueArray;
+    let match = misc_checkIfArraysMatch(res, elem.expects);
+    console.log('%s for "%s" [%s] %s match expected:[%s] [passed : %s]',
+                DEFAULT,
+                elem.set[0],
+                res.toString(),
+                match ? "does" : "does NOT",
+                elem.expects.toString(),
+                match ? YES: NO);
+  })
 }
 
 
