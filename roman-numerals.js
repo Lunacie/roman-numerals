@@ -51,7 +51,18 @@ function RomanNumber(value) {
   ** eg: IIX is valid, while IIIIX is not
   */
   this._checkRomanIsValid = function(str) {
-        return false;
+      let count = 0;
+      let last = null;
+      for (var i = 0; i < str.length; i++) {
+        if (last != null && last == str[i])
+          count += 1;
+        else if (last != null)
+          count = 0;
+        if (count >= 3)
+          return false;
+        last = str[i];
+      }
+      return true;
   }
 
 
