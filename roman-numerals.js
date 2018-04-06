@@ -14,6 +14,8 @@ const VALUES = {
   'V' : 5,
   'I' : 1
 };
+const KEY_ENTRIES = Object.keys(VALUES)
+const VALUE_ENTRIES = KEY_ENTRIES.map(k=> VALUES[k]);
 
 function RomanNumber(value) {
 
@@ -153,7 +155,10 @@ function RomanNumber(value) {
     if (this._type == ROMAN)
       return this._value;
     this._buildArrayFromNb(this._value);
-    let res = "XIV";
+    let res = "";
+    this._valueArray.forEach(function(elem){
+      res += KEY_ENTRIES[VALUE_ENTRIES.indexOf(elem)];
+    });
     return res;
   }
 
