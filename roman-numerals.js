@@ -219,6 +219,10 @@ test_buildArrayFromStr = function(data) {  console.log(DEFAULT, "\nCAN BUILD VAL
                 match ? YES: NO);
   })
 }
+test_buildArrayFromNb = function(data) {
+  console.log(DEFAULT, "\nCAN BUILD VALUE ARRAY FROM ARABIC NUMBER : ");
+  let nb = new RomanNumber();
+}
 
 
 
@@ -271,5 +275,21 @@ if (RUN_TESTS) {
   ];
   test_buildArrayFromStr(data);
 
+
+    /*
+    ** 4. this tests the _buildArrayFromNb() function
+    */
+    data = [
+      {expects : [1000, 100, 1000, 50, 10, 1, 10], set: 1969},
+      {expects : [10, 1, 5], set: 14},
+      {expects : [1000, 100, 1000, 10, 100, 1, 1], set: 1992},
+      {expects : [1000,500, 10, 100, 1, 1], set: 1592},
+      {expects : [1000, 100, 500, 50, 1, 1], set: 1452},
+      {expects : [1000, 500, 50, 1, 1], set: 1552},
+      {expects : [1000, 500, 50, 5], set: 1555},
+      {expects : [1000, 500, 100, 100, 50, 5], set: 1755},
+      {expects : [1, 10], set: 9},
+    ];
+    test_buildArrayFromNb(data);
 
 }
