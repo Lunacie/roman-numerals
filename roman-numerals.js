@@ -19,7 +19,17 @@ function RomanNumber(value) {
         this._type = FAILURE;
         throw("value required");
       }
-      
+    if (typeof value == 'string') {
+      if (/^\-?[0-9]*$/.test(value)) {
+        value = parseInt(value)
+        if (value < 1 || value > 3999) {
+          this._type = FAILURE;
+          throw("invalid range");
+        }
+        this._value = value;
+        this._type = ARABIC;
+      }
+    }
     return this._type;
   }
 
