@@ -110,8 +110,37 @@ function RomanNumber(value) {
   ** eg 1992 =>  [1000, 100, 1000, 10, 100, 1, 1]
   */
   this._buildArrayFromNb = function() {
-    let res = [1000, 100, 10, 1];
-    this._valueArray = res;
+      let res = [];
+      let str = this._value.toString();
+      let len = str.length - 1;
+      for (var i = 0; i < str.length; i++) {
+        let pow = 1;
+        for (var j = 0; j < len; j++)
+          pow *= 10;
+
+        if ((str[i] >= 1 && str[i] < 4)) {
+          for (var k = 0; k < str[i]; k++)
+            res.push(pow);
+        }
+        else if ((str[i] == 4)) {
+            res.push(pow);
+            res.push(pow / 2 * 10);
+        }
+        else if ((str[i] == 5)) {
+            res.push(pow / 2 * 10);
+        }
+        else if ((str[i] >= 6 && str[i] < 9)) {
+          res.push(pow / 2 * 10);
+          for (var k = 0; k < str[i] - 5; k++)
+            res.push(pow);
+        }
+        else if ((str[i] == 9)) {
+            res.push(pow);
+            res.push(pow * 10);
+        }
+        len -= 1;
+      }
+      this._valueArray = res;
   }
 
 
