@@ -164,6 +164,10 @@ test_checkRomanIsValid = function(data) {
     }
   })
 }
+test_buildArrayFromStr = function(data) {
+  console.log(DEFAULT, "\nCAN BUILD VALUE ARRAY FROM ROMAN NUMBER : ");
+  let nb = new RomanNumber();
+}
 
 
 
@@ -192,6 +196,29 @@ if (RUN_TESTS) {
       {expects : false, set : ["IIIIV", "IIIIIV", "IIIIIIV", "MMMMDXXVII"]},
     ]
     test_checkRomanIsValid(data);
+
+  /*
+  ** 3. this tests the _buildArrayFromStr() function
+  */
+  data = [
+    {expects : [1000], set: ["M"]},
+    {expects : [900], set: ["CM"]},
+    {expects : [500], set: ["D"]},
+    {expects : [400], set: ["CD"]},
+    {expects : [100], set: ["C"]},
+    {expects : [90], set: ["XC"]},
+    {expects : [50], set: ["L"]},
+    {expects : [40], set: ["XL"]},
+    {expects : [10], set: ["X"]},
+    {expects : [9], set: ["IX"]},
+    {expects : [5], set: ["V"]},
+    {expects : [4], set: ["IV"]},
+    {expects : [1], set: ["I"]},
+    {expects : [1000, 900, 90, 5], set: ["MCMXCV"]},
+    {expects : [1000, 500, 100, 50], set: ["MDCL"]},
+    {expects : [1000, 1000, 1000, 500, 10, 10, 5, 1, 1], set: ["MMMDXXVII"]},
+  ];
+  test_buildArrayFromStr(data);
 
 
 }
