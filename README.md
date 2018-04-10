@@ -105,26 +105,36 @@ len += 1;
 
 The converted builds an array of values to translate into roman characters by applying the following rules :
 * digit between 1 and 3 => just push the factor digit times
-``` eg: 2 => digit:2, factor:1  => [1, 1] => II```
-``` eg: 20 => digit:2, factor:10 => [10, 10] => XX```
-``` eg: 200 => digit:2, factor:100 => [100, 100] => CC```
-``` eg: 2000 => digit:2, factor:1000 => [1000, 1000] => MM```
+```
+eg: 2 => digit:2, factor:1  => [1, 1] => II
+eg: 20 => digit:2, factor:10 => [10, 10] => XX
+eg: 200 => digit:2, factor:100 => [100, 100] => CC
+eg: 2000 => digit:2, factor:1000 => [1000, 1000] => MM
+```
 * digit 4 => push the factor 1 time, then push (factor / 2 * 10)
-``` eg: 4 => digit:4, factor:1 => [1,  (1 / 2 * 10)] => [1, 5] => IV```
-``` eg: 40 => digit:4, factor:10 => [10,  (10 / 2 * 10)] => [10, 50] => XL```
-``` eg: 400 => digit:4, factor:100 => [100,  (100 / 2 * 10)] => [100, 500] => CD```
+```
+eg: 4 => digit:4, factor:1 => [1,  (1 / 2 * 10)] => [1, 5] => IV
+eg: 40 => digit:4, factor:10 => [10,  (10 / 2 * 10)] => [10, 50] => XL
+eg: 400 => digit:4, factor:100 => [100,  (100 / 2 * 10)] => [100, 500] => CD
+```
 * digit 5 => push (factor / 2 * 10)
-``` eg: 5 => digit:5, factor:1 => [(1 / 2 * 10)] => [5] => V```
-``` eg: 5 => digit:5, factor:10 => [(10 / 2 * 10)] => [50] => L```
-``` eg: 5 => digit:5, factor:100 => [(100 / 2 * 10)] => [500] => D```
+```
+eg: 5 => digit:5, factor:1 => [(1 / 2 * 10)] => [5] => V```
+eg: 5 => digit:5, factor:10 => [(10 / 2 * 10)] => [50] => L```
+eg: 5 => digit:5, factor:100 => [(100 / 2 * 10)] => [500] => D
+```
 * digit between 6 and 8  => push (factor / 2 * 10) then push the factor (digit - 5) times
-``` eg: 7 => digit:7, factor:1 => [(1 / 2 * 10), 1, 1] => [5, 1, 1] => VII```
-``` eg: 7 => digit:7, factor:10 => [(10 / 2 * 10), 10, 10] => [50, 10, 10] => LXX```
-``` eg: 7 => digit:7, factor:100 => [(100 / 2 * 10), 100, 100] => [500, 100, 100] => DCC```
+```
+eg: 7 => digit:7, factor:1 => [(1 / 2 * 10), 1, 1] => [5, 1, 1] => VII```
+eg: 7 => digit:7, factor:10 => [(10 / 2 * 10), 10, 10] => [50, 10, 10] => LXX```
+eg: 7 => digit:7, factor:100 => [(100 / 2 * 10), 100, 100] => [500, 100, 100] => DCC
+```
 * digit 9 => push the factor then push (factor * 10)
-``` eg: 9 => digit:9, factor:1 => [1, (1 * 10)] => [1, 10] => IX```
-``` eg: 9 => digit:9, factor:10 => [10, (10 * 10)] => [10, 100] => XC```
-``` eg: 9 => digit:9, factor:100 => [100, (100 * 10)] => [100, 1000] => CM```
+```
+eg: 9 => digit:9, factor:1 => [1, (1 * 10)] => [1, 10] => IX```
+eg: 9 => digit:9, factor:10 => [10, (10 * 10)] => [10, 100] => XC
+eg: 9 => digit:9, factor:100 => [100, (100 * 10)] => [100, 1000] => CM
+```
 
 
 
